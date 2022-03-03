@@ -126,47 +126,49 @@ function draw() {
       }*/
 
     }
+  }
+}
 
-    function keyPressed() {
-      if (keyCode === 32) {
-        if (numberOfArrows > 0) {
-          var posX = playerArcher.body.position.x;
-          var posY = playerArcher.body.position.y;
-          var angle = playerArcher.body.angle;
+function keyPressed() {
+  if (keyCode === 32) {
+    if (numberOfArrows > 0) {
+      var posX = playerArcher.body.position.x;
+      var posY = playerArcher.body.position.y;
+      var angle = playerArcher.body.angle;
 
-          var arrow = new PlayerArrow(posX, posY, 100, 10, angle);
+      var arrow = new PlayerArrow(posX, posY, 100, 10, angle);
 
-          arrow.trajectory = [];
-          Matter.Body.setAngle(arrow.body, angle);
-          playerArrows.push(arrow);
-          numberOfArrows -= 1;
-        }
+      arrow.trajectory = [];
+      Matter.Body.setAngle(arrow.body, angle);
+      playerArrows.push(arrow);
+      numberOfArrows -= 1;
+    }
+  }
+}
+
+function keyReleased() {
+  if (keyCode === 32) {
+    if (playerArrows.length) {
+      var angle = playerArcher.body.angle;
+      playerArrows[playerArrows.length - 1].shoot(angle);
+    }
+  }
+}
+
+function gameOver() {
+  swal(
+    {
+      title: `Game Over!!!`,
+      text: "Thanks for playing!!",
+      imageUrl:
+        "https://raw.githubusercontent.com/vishalgaddam873/PiratesInvision/main/assets/board.png",
+      imageSize: "150x150",
+      confirmButtonText: "Play Again"
+    },
+    function (isConfirm) {
+      if (isConfirm) {
+        location.reload();
       }
     }
-
-    function keyReleased() {
-      if (keyCode === 32) {
-        if (playerArrows.length) {
-          var angle = playerArcher.body.angle;
-          playerArrows[playerArrows.length - 1].shoot(angle);
-        }
-      }
-    }
-
-    function gameOver() {
-      swal(
-        {
-          title: `Game Over!!!`,
-          text: "Thanks for playing!!",
-          imageUrl:
-            "https://raw.githubusercontent.com/vishalgaddam873/PiratesInvision/main/assets/board.png",
-          imageSize: "150x150",
-          confirmButtonText: "Play Again"
-        },
-        function (isConfirm) {
-          if (isConfirm) {
-            location.reload();
-          }
-        }
-      );
-    }
+  );
+}
